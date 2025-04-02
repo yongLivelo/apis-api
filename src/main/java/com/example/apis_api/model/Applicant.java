@@ -12,19 +12,17 @@ public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     private String firstName;
+    private String applicationStatus;
     private String lastName;
     private String middleName;
     private LocalDate birthDate;
-    private String religion;
-    private int age;
     private String city;
     private String province;
     private String civilStatus;
-    private int height;
     private String trainingStatus;
     private String desiredPosition;
+    private int height;
     private Boolean highSchoolGraduate;
     private Boolean collegeGraduate;
 

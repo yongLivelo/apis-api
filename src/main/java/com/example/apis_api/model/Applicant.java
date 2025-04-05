@@ -12,22 +12,16 @@ public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String firstName;
-    private String applicationStatus;
-    private String lastName;
-    private String middleName;
-    private LocalDate birthDate;
-    private String city;
-    private String province;
-    private String civilStatus;
-    private String trainingStatus;
-    private String desiredPosition;
-    private int height;
-    private Boolean highSchoolGraduate;
-    private Boolean collegeGraduate;
 
-    @Column(nullable = false, updatable = false)
+    private int age;
+    private LocalDate dateOfBirth;
+    private String desiredPosition;
+    private String lastName;
+    private String firstName;
+    private String middleName;
     private LocalDate applicationDate;
+    private String applicationStatus;
+    private String trainingStatus;
 
     @PrePersist
     protected void onCreate() {

@@ -12,19 +12,18 @@ public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    private int age;
-    private LocalDate dateOfBirth;
-    private String desiredPosition;
+    private LocalDate applicationDate;
+    private String applicationStatus;
     private String lastName;
     private String firstName;
     private String middleName;
-    private LocalDate applicationDate;
-    private String applicationStatus;
+    private int age;
+    private LocalDate dateOfBirth;
+    private String desiredPosition;
     private String trainingStatus;
 
     @PrePersist
     protected void onCreate() {
-        this.applicationDate = LocalDate.now(); // Set the date on entity creation
+        this.applicationDate = LocalDate.now();
     }
 }

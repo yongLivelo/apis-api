@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +17,12 @@ public class ApplicantController {
     @Autowired
     private ApplicantRepo repo;
 
-    // Create
+    //CREATING APPLICANT
     @PostMapping("/addApplicant")
     public ResponseEntity<Applicant> addApplicant(@RequestBody Applicant applicant) {
+
+
+        // The "id" and "applicationDate" fields should be empty on request body.
         if (applicant.getId() != 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -33,40 +35,42 @@ public class ApplicantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedApplicant);
     }
 
-    // Get first applicant (to keep return type Applicant)
+    //GETTING ALL APPLICANT
     @GetMapping("/getApplicants")
-    public ResponseEntity<List<Applicant>> getFirstApplicant() {
+    public ResponseEntity<List<Applicant>> getApplicants() {
         List<Applicant> applicants = repo.findAll();
         if (applicants.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        return ResponseEntity.ok(applicants); // Only returns first for compliance
+        return ResponseEntity.ok(applicants);
     }
 
-    // Delete (return deleted applicant instead of void)
+    //DELETING AN APPLICANT
     @DeleteMapping("/deleteApplicant/{id}")
     public ResponseEntity<Applicant> deleteApplicant(@PathVariable Long id) {
         Optional<Applicant> optionalApplicant = repo.findById(id);
+
         if (optionalApplicant.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Applicant deleted = optionalApplicant.get();
         repo.deleteById(id);
+        Applicant deleted = optionalApplicant.get();
         return ResponseEntity.ok(deleted);
     }
 
-    // Update (Partial)
+    //UPDATING AN APPLICANT
     @PatchMapping("/updateApplicant/{id}")
     public ResponseEntity<Applicant> updateApplicant(@PathVariable Long id, @RequestBody Applicant newData) {
         Optional<Applicant> optionalApplicant = repo.findById(id);
         if (optionalApplicant.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
+        
         Applicant existing = optionalApplicant.get();
 
+        // The "id" and "applicationDate" fields should be empty on request body.
         if (newData.getId() != 0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -74,6 +78,7 @@ public class ApplicantController {
         if (newData.getApplicationDate() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+
 
         if (newData.getAge() != 0) existing.setAge(newData.getAge());
         if (newData.getDateOfBirth() != null) existing.setDateOfBirth(newData.getDateOfBirth());

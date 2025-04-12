@@ -67,7 +67,7 @@ public class ApplicantController {
         if (optionalApplicant.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        
+
         Applicant existing = optionalApplicant.get();
 
         // The "id" and "applicationDate" fields should be empty on request body.
@@ -78,8 +78,7 @@ public class ApplicantController {
         if (newData.getApplicationDate() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
-
+        
         if (newData.getAge() != 0) existing.setAge(newData.getAge());
         if (newData.getDateOfBirth() != null) existing.setDateOfBirth(newData.getDateOfBirth());
         if (newData.getDesiredPosition() != null) existing.setDesiredPosition(newData.getDesiredPosition());

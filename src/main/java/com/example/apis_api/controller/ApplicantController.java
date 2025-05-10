@@ -27,7 +27,7 @@ public class ApplicantController {
 
 
     @GetMapping("/getApplicants")
-    public ResponseEntity<List<Applicant>> getApplicants() {
+    public ResponseEntity<List<?>> getApplicants() {
         List<Applicant> applicants = repo.findAll();
         if (applicants.isEmpty()) return ResponseEntity.noContent().build();
 

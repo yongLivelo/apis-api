@@ -1,15 +1,20 @@
 package com.example.apis_api.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+
 @Data
-@Builder(toBuilder = true)
 @Entity
 @Table(name = "applicant")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class Applicant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

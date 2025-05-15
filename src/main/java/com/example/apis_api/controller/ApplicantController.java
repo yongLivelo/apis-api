@@ -56,6 +56,7 @@ public class ApplicantController {
 
         Applicant updated = existing.toBuilder()
                 .age(newData.getAge() != 0 ? newData.getAge() : existing.getAge())
+                .sex(newData.getSex() != null ? newData.getSex() : existing.getSex())
                 .dateOfBirth(newData.getDateOfBirth() != null ? newData.getDateOfBirth() : existing.getDateOfBirth())
                 .desiredPosition(newData.getDesiredPosition() != null ? newData.getDesiredPosition() : existing.getDesiredPosition())
                 .lastName(newData.getLastName() != null ? newData.getLastName() : existing.getLastName())
@@ -67,5 +68,20 @@ public class ApplicantController {
 
         return ResponseEntity.ok(repo.save(updated));
 
+    }
+
+    @GetMapping("/getNextApplicantId")
+    public ResponseEntity<Long> getNextApplicantId() {
+        // Assumes IDs are sequential and auto-incremented
+        Optional<Applicant> lastApplicant = repo.findTopByOrderByIdDesc();
+        long nextId = lastApplicant.map(applicant -> applicant.getId() + 1).orElse(1L);
+        return ResponseEntity.ok(nextId);
+    }
+
+    @GetMapping("/getApplicant/{id}")
+    public ResponseEntity<Applicant> getApplicantById(@PathVariable Long id) {
+        Optional<Applicant> optionalApplicant = repo.findById(id);
+        return optionalApplicant.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

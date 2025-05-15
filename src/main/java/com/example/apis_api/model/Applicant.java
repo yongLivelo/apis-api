@@ -22,6 +22,7 @@ public class Applicant {
 
     private int age;
     private LocalDate dateOfBirth;
+    private String sex;
     private String desiredPosition;
     private String lastName;
     private String firstName;

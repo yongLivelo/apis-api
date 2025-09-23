@@ -10,39 +10,39 @@ import java.util.List;
 @RequestMapping("/applicants")
 public class ApplicantsController {
 
-    private final ApplicantsRepository repository;
+    private final ApplicantsRepository applicantsRepository;
 
-    public ApplicantsController(ApplicantsRepository repository) {
-        this.repository = repository;
+    public ApplicantsController(ApplicantsRepository applicantsRepository) {
+        this.applicantsRepository = applicantsRepository;
     }
 
-    @GetMapping("/getApplicants")
+    @GetMapping("/getAllApplicants")
     public List<Applicants> getAllApplicants() {
-        return repository.findAll();
+        return applicantsRepository.findAll();
     }
 
     @GetMapping("/getApplicant/{id}")
     public Applicants getApplicantById(@PathVariable Long id) {
-        return repository.findById(id).orElse(null);
+        return applicantsRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/addApplicant")
+    @PostMapping("/createApplicant")
     public Applicants createApplicant(@RequestBody Applicants applicant) {
-        return repository.save(applicant);
+        return applicantsRepository.save(applicant);
     }
 
     @PutMapping("/updateApplicant/{id}")
-    public Applicants updateApplicant(@PathVariable Long id, @RequestBody Applicants updatedApplicant) {
-        return repository.findById(id).map(applicant -> {
+    public Applicants updateApplicantById(@PathVariable Long id, @RequestBody Applicants updatedApplicant) {
+        return applicantsRepository.findById(id).map(applicant -> {
             applicant.setName(updatedApplicant.getName());
             applicant.setEmail(updatedApplicant.getEmail());
-            return repository.save(applicant);
+            return applicantsRepository.save(applicant);
         }).orElse(null);
     }
 
     @DeleteMapping("/deleteApplicant/{id}")
     public String deleteApplicant(@PathVariable Long id) {
-        repository.deleteById(id);
+        applicantsRepository.deleteById(id);
         return "Applicant with ID " + id + " deleted.";
     }
 }
